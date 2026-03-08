@@ -1,0 +1,26 @@
+# Show the current working directory
+getwd()
+# List files in the current directory
+list.files()
+
+# List files with details
+list.files(full.names = TRUE)
+# Change working directory
+setwd("C:/genomics_project/data")
+
+# Confirm the change
+getwd()
+# Create project folders
+dir.create("genomics_project")
+dir.create("genomics_project/data")
+dir.create("genomics_project/results")
+dir.create("genomics_project/scripts")
+# Copy a file from one folder to another
+file.copy("data/sample1.fastq",
+          "results/sample1.fastq")
+# Process multiple FASTQ files automatically
+files <- list.files("data", pattern = ".fastq", full.names = TRUE)
+
+for (f in files) {
+  print(paste("Processing file:", f))
+}
