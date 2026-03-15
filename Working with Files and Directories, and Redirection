@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Change to dataset directory
+cd ~/shell_data/untrimmed_fastq
+
+# Print first 10 lines of a FASTQ file
+head -n 10 SRR097977.fastq
+
+# Print last 10 lines of the other file
+tail -n 10 SRR098026.fastq
+
+# View the file interactively using less (press q to quit)
+less SRR097977.fastq
+
+# Search inside the FASTQ for a specific sequence motif (example: "TTTTT")
+grep "TTTTT" SRR097977.fastq
+chmod +x view_files.sh
+./view_files.sh
+#!/bin/bash
+
+# Change to dataset directory
+cd ~/shell_data/untrimmed_fastq
+
+# Search for reads containing lots of Ns (low quality)
+grep -B1 -A2 "NNNNNN" SRR097977.fastq > bad_reads.txt
+
+# Count how many lines in that file have N runs
+grep -c "NNNNNN" bad_reads.txt
+
+# Count total number of reads in the FASTQ (4 lines per read)
+# (this divides line count by 4)
+chmod +x process_reads.sh
+./process_reads.sh
+wc -l SRR097977.fastq | awk '{print $1/4, "reads"}'
