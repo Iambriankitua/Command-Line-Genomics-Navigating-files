@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Move to data directory
+cd ~/shell_data/untrimmed_fastq
+
+# View first lines of a FASTQ file
+head -n 10 SRR097977.fastq
+
+# Search for poor-quality reads (many Ns)
+grep "NNNNN" SRR097977.fastq > bad_reads.txt
+
+# Count number of bad reads
+grep -c "NNNNN" SRR097977.fastq
+chmod +x analysis_script.sh
+./analysis_script.sh
+# Open nano editor
+nano README.txt
+Project: Genomic sequence analysis
+Date: 2026-03-29
+
+Description:
+- FASTQ files contain sequencing reads
+- bad_reads.txt contains reads with low quality (many Ns)
+# Create project folders
+mkdir genomics_project
+cd genomics_project
+
+mkdir data
+mkdir results
+mkdir scripts
+mkdir docs
+# Save all commands used
+history > docs/command_history.txt
+#!/bin/bash
+
+# Set project directory
+cd ~/genomics_project
+
+# Move raw data to data folder
+mv ~/shell_data/untrimmed_fastq/*.fastq data/
+
+# Analyze files
+for file in data/*.fastq
+do
+  echo "Processing $file"
+  grep "NNNNN" "$file" > results/$(basename "$file")_bad.txt
+done
+
+
